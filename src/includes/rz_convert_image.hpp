@@ -1,7 +1,15 @@
 #pragma once
 
+#include <QDir>
 #include <QFile>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QImage>
+#include <QMatrix2x2>
 #include <QObject>
+#include <QPainter>
+#include <QThread>
+#include <QtConcurrent>
 #include <QtPlugin>
 
 #include "rz_photo-gallery_plugins.hpp"
@@ -19,12 +27,9 @@ private:
         QString fileBasename{""};    // 2014-04-18_203353
         QString fileSuffix{""};      // jpg
         QString fileAbolutePath{""}; // /home/zb_bamboo/pictures/images
-        QString newFolder{"WebP"};
-        QString newSuffix{"webp"};
-        QList<int> webpSizes = {480, 680, 800, 1024, 1280};
     };
     imageStruct imgStruct;
-    void setImageStruct(QString &imageInput);
+    void setImageStruct(QString &pathToImageInput);
 
     struct newImageStruct
     {
@@ -39,8 +44,12 @@ private:
     };
     newImageStruct newImageStruct;
 
+    const bool convertImage(const int &targetSize);
+    const bool convertImages();
+
     std::tuple<bool, std::string> isTargetExist(const QFile &pathToTarget, const QString type);
     bool createWebpPath();
+    QString getPhotoDateTimeHuman();
 
 public:
     explicit Rz_convertImage(QObject *parent = nullptr);
@@ -63,7 +72,4 @@ public:
                                             QString pathToFile) Q_DECL_OVERRIDE;
     void setHashMap(const QHash<QString, QString> defaultMetaKeys, QString type) Q_DECL_OVERRIDE;
     QHash<QString, QString> getHashMap(QString type) Q_DECL_OVERRIDE;
-
-    const bool convertImage();
-    const bool convertImages();
 };
