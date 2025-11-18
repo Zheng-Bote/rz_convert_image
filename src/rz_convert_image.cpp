@@ -69,7 +69,6 @@ const bool Rz_convertImage::convertImage(const int &targetSize)
 
     QString imgOutPath = imgStruct.fileAbolutePath + QDir::separator() + newImageStruct.newFolder
                          + QDir::separator() + imgOutName;
-    qDebug() << "imgOutPath: " << imgOutPath;
 
     std::tie(oknok, msg) = isTargetExist(QFile(imgOutPath), "Dir");
     if (!oknok) {
@@ -114,11 +113,6 @@ void Rz_convertImage::setImageStruct(QString &pathToImageInput)
     imgStruct.fileBasename = fileInfo.completeBaseName();
     imgStruct.fileSuffix = fileInfo.completeSuffix();
     imgStruct.fileAbolutePath = fileInfo.absolutePath();
-
-    qDebug() << "imgStruct.fileName: " << imgStruct.fileName;
-    qDebug() << "imgStruct.fileBasename: " << imgStruct.fileBasename;
-    qDebug() << "imgStruct.fileSuffix: " << imgStruct.fileSuffix;
-    qDebug() << "imgStruct.fileAbolutePath: " << imgStruct.fileAbolutePath;
 }
 
 std::tuple<bool, std::string> Rz_convertImage::isTargetExist(const QFile &pathToTarget,
